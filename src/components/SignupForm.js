@@ -18,7 +18,10 @@ function SignupForm() {
     console.log(values)
     if (values.password === values.confirmPassword) {
       signup(values)
-        .then((res) => localStorage.setItem('user', JSON.stringify(res)))
+        .then((res) => {
+          localStorage.setItem('user_id', res.data.id)
+          localStorage.setItem('user_token', res.data.token)
+        })
         .then(() => history.push('/'))
         .catch((err) => console.log(err))
     }

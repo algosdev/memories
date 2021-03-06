@@ -2,24 +2,28 @@ import React, { useState, useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 function Header() {
   const history = useHistory()
-  const [user, setUser] = useState()
+  const [userId, setUser] = useState('')
   useEffect(() => {
-    setUser(localStorage.getItem('user'))
+    setUser(localStorage.getItem('user_id'))
   }, [history.location.key])
   const logout = () => {
-    localStorage.removeItem('user')
+    localStorage.removeItem('user_id')
+    localStorage.removeItem('user_token')
     history.push('/')
-    setUser(false)
+    setUser('')
   }
-  console.log(user)
+  console.log(userId)
   return (
     <div className='header'>
       <Link to='/'>Memories</Link>
       <div className='auth_section'>
-        {!user ? (
+        {!userId ? (
           <button onClick={() => history.push('/login')}>Login</button>
         ) : (
-          <button onClick={logout}>Logout</button>
+          <>
+            <Link to='/profile'>Profile</Link>
+            <button onClick={logout}>Logout</button>
+          </>
         )}
       </div>
     </div>
