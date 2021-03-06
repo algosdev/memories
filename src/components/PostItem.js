@@ -12,13 +12,25 @@ function PostItem({ data }) {
     creator: data.creator,
     tags: data.tags,
     selectedFile: data.selectedFile,
-    message: data.message,
+    description: data.description,
     comment: '',
   })
+  const filterPostValues = () => {
+    if (values.selectedFile === data.selectedFile) {
+      console.log(true)
+      return {
+        title: values.title,
+        tags: values.tags,
+        description: values.description,
+        comment: values.value,
+      }
+    } else {
+      return values
+    }
+  }
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(values)
-    updatePost(data._id, values)
+    updatePost(data._id, filterPostValues())
       .then((res) => {
         handleClose()
         window?.location.reload()
@@ -125,22 +137,14 @@ function PostItem({ data }) {
             />
             <input
               type='text'
-              value={values.message}
-              placeholder='Message'
-              name='message'
+              value={values.description}
+              placeholder='Description'
+              name='description'
               onChange={(e) =>
-                setValues({ ...values, message: e.target.value })
+                setValues({ ...values, description: e.target.value })
               }
             />
-            <input
-              type='text'
-              value={values.creator}
-              placeholder='Creator'
-              name='creator'
-              onChange={(e) =>
-                setValues({ ...values, creator: e.target.value })
-              }
-            />
+
             <input
               type='text'
               value={values.tags}

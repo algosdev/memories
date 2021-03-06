@@ -10,6 +10,7 @@ function Header() {
     localStorage.removeItem('user_id')
     localStorage.removeItem('user_token')
     history.push('/')
+    window.location.reload()
     setUser('')
   }
   console.log(userId)
